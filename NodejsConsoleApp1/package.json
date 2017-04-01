@@ -1,0 +1,15 @@
+{
+  "name": "nodejs-console-app1",
+  "version": "0.0.0",
+  "description": "NodejsConsoleApp1",
+  "main": "app.js",
+  "author": {
+    "name": "jag"
+  },
+  "dependencies": {
+    "express": "^4.15.2",
+    "rotelctl": "^1.1.3",
+    "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3"
+  }
+}
