@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "VolumioRotelRouter", "NodejsConsoleApp1\VolumioRotelRouter.njsproj", "{8FD95420-A855-4F3B-9556-0E673BE7ED31}"
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "VolumioRotelRouter", "VolumioRotelRouter\VolumioRotelRouter.njsproj", "{8FD95420-A855-4F3B-9556-0E673BE7ED31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
