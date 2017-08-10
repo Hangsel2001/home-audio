@@ -3,8 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="apple-touch-icon" href="/logo.png">
     <title>Rotel Controller</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
+    crossorigin="anonymous">
+
     <style>
         #volume {
             width: 100%;
@@ -15,32 +21,42 @@
     <form class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>ROTEL</h1>
+                <img src="logo.png"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <pre id="rotel-display" data-bind="text: display"></pre>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+              
                 <h2>Volym</h2>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-11">
-                <input type="range" min="0" max="70" value="40" id="volume" />
+                <input type="range" min="0" max="70" value="40" id="volume" data-bind="value: volume"/>
             </div>
             <div class="col-sm-1">
-                <span id="volume-text">40</span>
+                <span id="volume-text" data-bind="text: volume">40</span>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <h2>Ingång</h2>
                 <label class="radio-inline">
-                    <input type="radio" name="source" checked value="optical" />Volumio / AirPlay
+                    <input type="radio" name="source" checked value="optical" data-bind="checked: source"/>Volumio / AirPlay
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" name="source" value="bluetooth" />Bluetooth
+                    <input type="radio" name="source" value="bluetooth" data-bind="checked: source" />Bluetooth
                 </label>
             </div>
         </div>
     </form>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>    
     <script src="app.js"></script>
 
 </body>

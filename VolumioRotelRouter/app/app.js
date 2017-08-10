@@ -1,43 +1,27 @@
 ﻿(function () {
-    var volume = 40;
-    var input = "";
-
-    var elements = {};
-    elements.range = $("#volume");
-    elements.volumeText = $("#volume-text");
-
-    var setVolume = function (vol, skipRange) {
-        if (vol !== volume) {
-            volume = vol;
-            socket.emit("volume", vol);
-            if (!skipRange) {
-                elements.range.val(vol);
-            };
-            elements.volumeText.html(vol);
-        }
-    };
-
-    var setSource = function (source) {
-        $('input:radio[name=source]').val(source);
-    }
-
-    var socket = io();
-    socket.on('volume', function (vol) {
-        setVolume(vol);
+    var RotelViewModel =  function() {
+       var self = this;
+       self.volume= ko.observable(40);
+       self.source= ko.observable("optical");
+       self.display= ko.observable("");       
+       var socket = io();
+       self.volume.subscribe(function(newValue) {
+            socket.emit("volume", newValue);
+       })
+       self.source.subscribe(function(newValue) {
+            socket.emit("source", newValue);
+       })
+       socket.on('volume', function (vol) {
+        self.volume(vol);
     });
-
-    elements.range.on('input change', function () {
-        setVolume(elements.range.val(), true);
+       socket.on('source', function (source) {
+        self.source(source);
     });
+       socket.on('display', function(display) {
 
-    $('input[type=radio]').on('change', function () {
-        socket.emit("source",$('input[name=source]:checked').val())
-    });
+        self.display(display.substring(0,20) + "\n" + display.substring(20));
+    })
+   };
+   ko.applyBindings(new RotelViewModel());
 
-
-
-
-    //io.on('input', function (input) {
-
-    //});
 })();

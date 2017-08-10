@@ -32,18 +32,44 @@ volumio.on('pushState', (data) => {
     if (data.status === "play" && isPlaying !== true) {
         isPlaying = true;
         console.log("Trying to power on");
-        rctl.powerOn((err, response) => {
+        rctl.getCurrentPower((err, response) => {
+            console.log(response);
             if (!err) {
+                if (response !== "on") {
+                    rctl.powerOn();  
+                                    
+                };
                 rctl.optical1();
             }
         });
         
 
     } 
-    if (data.status === "pause") {
+    if (data.status !== "play") {
         isPlaying = false;
     }
-    console.log(data);
+    console.log(data.status);
+});
+
+rctl.on('data', function(data) {
+  
+  if (data.name === "source") {
+      var toSend = "";
+        switch (data.value) {
+            case "usb":
+                toSend = "bluetooth";
+                volumio.emit("pause", "pause");
+                break;
+            case "opt1":
+                toSend = "optical";
+                break;
+        }
+        emit("source", toSend);
+    } else if (data.name === "volume") {
+        emit("volume", data.value);
+    } else {
+        emit(data.name, data.value);
+    }
 });
 
 io.on("connection", (socket) => {
@@ -62,24 +88,15 @@ io.on("connection", (socket) => {
         }
     });
 
-    rctl.getVolume((vol) => {
-        io.emit("volume", vol.value);        
-    });
-    rctl.getCurrentSource((source) => {
-        var toSend = "";
-        switch (source) {
-            case "usb":
-                toSend = "bluetooth";
-                break;
-            case "optical1":
-                toSend = "optical";
-                break;
-        }
-        io.emit("source", toSend);
-
-    });
+        rctl.getVolume();
+        rctl.getCurrentSource(); 
+        rctl.getDisplay();       
     console.log("Socket user Connected");
 });
 
+function emit(key, value) {
+    io.emit(key, value);
+    console.log(key + " : " + value);
+}
 
 rctl.open();
