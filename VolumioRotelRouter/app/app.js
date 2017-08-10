@@ -12,6 +12,7 @@
             socket.emit("source", newValue);
        })
        socket.on('volume', function (vol) {
+       	if (vol === "min") { vol = 0};
         self.volume(vol);
     });
        socket.on('source', function (source) {
